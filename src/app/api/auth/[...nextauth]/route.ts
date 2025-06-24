@@ -4,7 +4,9 @@ import NextAuth, { AuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: AuthOptions = {
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: MongoDBAdapter(clientPromise, {
+    databaseName: "tictic",
+  }),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,

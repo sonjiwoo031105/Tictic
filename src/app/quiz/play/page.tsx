@@ -14,7 +14,7 @@ export default function QuizPlayPage() {
 	const { data: questions, isLoading, isError } = useQuery({
 		queryKey: ['quiz', category, difficulty],
 		queryFn: () => fetchQuiz(category, difficulty),
-		staleTime: 1000 * 60, 
+		staleTime: 1000 * 60,
 	});
 
 	const [current, setCurrent] = useState(0);
@@ -36,7 +36,7 @@ export default function QuizPlayPage() {
 				setSelected(null);
 				setShowAnswer(false);
 			} else {
-				router.push(`/quiz/result?score=${score + (answer === questions[current].correct_answer ? 1 : 0)}`);
+				router.push(`/quiz/result?score=${score + (answer === questions[current].correct_answer ? 1 : 0)}&category=${category}&difficulty=${difficulty}`);
 			}
 		}, 1500);
 	};
@@ -62,7 +62,7 @@ export default function QuizPlayPage() {
 						key={ans}
 						disabled={!!selected}
 						onClick={() => handleAnswer(ans)}
-						className={`w-full px-4 py-3 rounded-lg text-left border ${showAnswer
+						className={`w-full px-4 py-3 rounded-lg text-left border cursor-pointer ${showAnswer
 							? ans === question.correct_answer
 								? 'bg-green-100 border-green-500'
 								: ans === selected
