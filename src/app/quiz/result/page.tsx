@@ -1,5 +1,6 @@
 'use client';
 
+import LoginButton from '@/app/components/LoginButton';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 export default function QuizResultPage() {
@@ -32,6 +33,8 @@ export default function QuizResultPage() {
       <p className="text-sm text-gray-400 mt-6">
         로그인하면 점수가 저장돼요 📝
       </p>
+
+      <LoginButton />
     </main>
   );
 }
