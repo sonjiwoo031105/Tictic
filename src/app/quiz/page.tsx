@@ -1,71 +1,82 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { fetchLocalQuiz } from '@/app/lib/fetchLocalQuiz';
+import { Quiz } from '@/app/types/quiz';
 
-const categories = [
-  { id: 9, name: '일반 상식' },
-  { id: 11, name: '영화' },
-  { id: 12, name: '음악' },
-  { id: 17, name: '과학' },
-  { id: 18, name: '컴퓨터' },
-  { id: 23, name: '역사' },
-  { id: 22, name: '지리' },
-  { id: 27, name: '동물' },
-];
-
-const difficulties = ['easy', 'medium', 'hard'];
-
-export default function QuizStartPage() {
+export default function QuizPlayPage() {
   const router = useRouter();
-  const [category, setCategory] = useState(9);
-  const [difficulty, setDifficulty] = useState('medium');
+  const { data: questions, isLoading, isError } = useQuery<Quiz[]>({
+    queryKey: ['local-quiz'],
+    queryFn: fetchLocalQuiz,
+    staleTime: 1000 * 60,
+  });
 
-  const startQuiz = () => {
-    router.push(`/quiz/play?category=${category}&difficulty=${difficulty}`);
+  const [current, setCurrent] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [score, setScore] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [answers, setAnswers] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!questions || !questions[current]) return;
+
+    const q = questions[current];
+    const shuffled = [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5);
+    setAnswers(shuffled);
+  }, [current, questions]);
+
+  if (isLoading) return <div className="text-center py-20">문제를 불러오는 중...</div>;
+  if (isError || !questions) return <div className="text-center py-20">문제를 불러올 수 없습니다.</div>;
+
+  const question = questions[current];
+
+  const handleAnswer = (answer: string) => {
+    setSelected(answer);
+    setShowAnswer(true);
+
+    const correct = answer === question.correct_answer;
+    if (correct) {
+      setScore((prev) => prev + 1);
+    }
+
+    setTimeout(() => {
+      if (current + 1 < questions.length) {
+        setCurrent((prev) => prev + 1);
+        setSelected(null);
+        setShowAnswer(false);
+      } else {
+        router.push(`/quiz/result?score=${correct ? score + 1 : score}`);
+      }
+    }, 1500);
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
-      <h1 className="text-3xl font-bold text-blue-600 mb-6">퀴즈 설정</h1>
-
-      <div className="w-full max-w-md space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">카테고리</label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(Number(e.target.value))}
-            className="w-full mt-1 px-3 py-2 border rounded-lg"
+    <main className="max-w-xl mx-auto p-4">
+      <h2 className="text-xl font-semibold mb-4">
+        문제 {current + 1} / {questions.length}
+      </h2>
+      <div className="text-lg font-medium mb-6">다음 중 맞는 표현은?</div>
+      <div className="space-y-3">
+        {answers.map((ans, i) => (
+          <button
+            key={i}
+            disabled={!!selected}
+            onClick={() => handleAnswer(ans)}
+            className={`w-full px-4 py-3 rounded-lg text-left border cursor-pointer ${showAnswer
+                ? ans === question.correct_answer
+                  ? 'bg-green-100 border-green-500'
+                  : ans === selected
+                    ? 'bg-red-100 border-red-500'
+                    : 'opacity-50'
+                : 'hover:bg-blue-100'
+              }`}
           >
-            {categories.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">난이도</label>
-          <select
-            value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value)}
-            className="w-full mt-1 px-3 py-2 border rounded-lg"
-          >
-            {difficulties.map((d) => (
-              <option key={d} value={d}>
-                {d}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <button
-          onClick={startQuiz}
-          className="w-full bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 cursor-pointer"
-        >
-          퀴즈 시작!
-        </button>
+            {ans}
+          </button>
+        ))}
       </div>
     </main>
   );

@@ -1,0 +1,206 @@
+[
+  {
+    "correct_answer": "싫증나다",
+    "incorrect_answers": ["실증나다", "실정나다", "싫정나다"]
+  },
+  {
+    "correct_answer": "헷갈리다",
+    "incorrect_answers": ["헥갈리다", "헤깔리다", "헷깔리다"]
+  },
+  {
+    "correct_answer": "왠지",
+    "incorrect_answers": ["웬지", "왼지", "왜인지"]
+  },
+  {
+    "correct_answer": "되려",
+    "incorrect_answers": ["되레", "되이려", "되롤"]
+  },
+  {
+    "correct_answer": "가뿐하다",
+    "incorrect_answers": ["가뿐히다", "가뿐타다", "가뿐하다가"]
+  },
+  {
+    "correct_answer": "되새기다",
+    "incorrect_answers": ["되세기다", "되색이다", "되새키다"]
+  },
+  {
+    "correct_answer": "설레다",
+    "incorrect_answers": ["설레이다", "설래다", "설레인다"]
+  },
+  {
+    "correct_answer": "어쨌든",
+    "incorrect_answers": ["어쨋든", "어떻든", "엇쨌든"]
+  },
+  {
+    "correct_answer": "예기치 않다",
+    "incorrect_answers": ["예기치않다", "예상치 않다", "예상치않다"]
+  },
+  {
+    "correct_answer": "이따",
+    "incorrect_answers": ["있따", "이타", "잇따"]
+  },
+  {
+    "correct_answer": "웬일이야",
+    "incorrect_answers": ["왠일이야", "왼일이야", "왜일이야"]
+  },
+  {
+    "correct_answer": "같은 편",
+    "incorrect_answers": ["가튼 편", "같은 변", "가튼 변"]
+  },
+  {
+    "correct_answer": "던지다",
+    "incorrect_answers": ["든지다", "던니다", "던시다"]
+  },
+  {
+    "correct_answer": "반드시",
+    "incorrect_answers": ["반듯이", "반드시이", "반드시다"]
+  },
+  {
+    "correct_answer": "잊히다",
+    "incorrect_answers": ["잊기다", "잊치다", "잊히이다"]
+  },
+  {
+    "correct_answer": "애간장",
+    "incorrect_answers": ["애깐장", "에간장", "애가장"]
+  },
+  {
+    "correct_answer": "딴청",
+    "incorrect_answers": ["딴챙", "딴창", "딴청이"]
+  },
+  {
+    "correct_answer": "우레",
+    "incorrect_answers": ["우뢰", "우례", "우뢰이"]
+  },
+  {
+    "correct_answer": "가리키다",
+    "incorrect_answers": ["가르키다", "갈리키다", "가리기다"]
+  },
+  {
+    "correct_answer": "깨달았다",
+    "incorrect_answers": ["깨닳았다", "깨달앗다", "깨달랐다"]
+  },
+  {
+    "correct_answer": "며칠",
+    "incorrect_answers": ["몇일", "며칟", "몇칠"]
+  },
+  {
+    "correct_answer": "연륜",
+    "incorrect_answers": ["연륭", "열륜", "연윤"]
+  },
+  {
+    "correct_answer": "기지개",
+    "incorrect_answers": ["기지게", "기찌개", "기직개"]
+  },
+  {
+    "correct_answer": "어이없다",
+    "incorrect_answers": ["어의없다", "어잇없다", "어읻없다"]
+  },
+  {
+    "correct_answer": "막역하다",
+    "incorrect_answers": ["막연하다", "마격하다", "마역하다"]
+  },
+  {
+    "correct_answer": "간지럽히다",
+    "incorrect_answers": ["간지럽게하다", "간질이다", "간지럽케하다"]
+  },
+  {
+    "correct_answer": "배어 있다",
+    "incorrect_answers": ["베어 있다", "배여 있다", "베여 있다"]
+  },
+  {
+    "correct_answer": "다르다",
+    "incorrect_answers": ["틀리다", "딴르다", "달르다"]
+  },
+  {
+    "correct_answer": "통틀어",
+    "incorrect_answers": ["통채로", "통털어", "통들어"]
+  },
+  {
+    "correct_answer": "하릴없다",
+    "incorrect_answers": ["하릴없어", "할일없다", "할릴없다"]
+  },
+  {
+    "correct_answer": "뒷심",
+    "incorrect_answers": ["뒤심", "뒤씸", "뒷씸"]
+  },
+  {
+    "correct_answer": "거짓말",
+    "incorrect_answers": ["거짇말", "거짓마", "거직말"]
+  },
+  {
+    "correct_answer": "단출하다",
+    "incorrect_answers": ["단촐하다", "단촐타다", "단줄하다"]
+  },
+  {
+    "correct_answer": "느지막이",
+    "incorrect_answers": ["느즈막히", "느즈막이", "느지막히"]
+  },
+  {
+    "correct_answer": "띄어쓰기",
+    "incorrect_answers": ["띠어쓰기", "띄여쓰기", "띠여쓰기"]
+  },
+  {
+    "correct_answer": "여보세요",
+    "incorrect_answers": ["여보세여", "여보세오", "여보세욤"]
+  },
+  {
+    "correct_answer": "이내",
+    "incorrect_answers": ["이나", "이네", "인에"]
+  },
+  {
+    "correct_answer": "겨를",
+    "incorrect_answers": ["결을", "겨를이", "결을이"]
+  },
+  {
+    "correct_answer": "가름하다",
+    "incorrect_answers": ["가늠하다", "가르다", "가람하다"]
+  },
+  {
+    "correct_answer": "낫다",
+    "incorrect_answers": ["나다", "놋다", "낟다"]
+  },
+  {
+    "correct_answer": "다 되다",
+    "incorrect_answers": ["다되다", "다됬다", "다되엇다"]
+  },
+  {
+    "correct_answer": "되다",
+    "incorrect_answers": ["돼다", "됬다", "돼었다"]
+  },
+  {
+    "correct_answer": "돼요",
+    "incorrect_answers": ["되요", "됴요", "돼요오"]
+  },
+  {
+    "correct_answer": "넓적하다",
+    "incorrect_answers": ["널적하다", "넓직하다", "넓다"]
+  },
+  {
+    "correct_answer": "어느덧",
+    "incorrect_answers": ["어느듯", "어느덛", "어느둗"]
+  },
+  {
+    "correct_answer": "뵙겠습니다",
+    "incorrect_answers": ["봅겠습니다", "뵈겠습니다", "봬겠습니다"]
+  },
+  {
+    "correct_answer": "맞는지",
+    "incorrect_answers": ["맞는지요", "맞는지이", "맞는찌"]
+  },
+  {
+    "correct_answer": "마찬가지",
+    "incorrect_answers": ["마찬가티", "마찬가지요", "마찮가지"]
+  },
+  {
+    "correct_answer": "참석률",
+    "incorrect_answers": ["참가율", "참석율", "참속률"]
+  },
+  {
+    "correct_answer": "예쁘다",
+    "incorrect_answers": ["이쁘다", "에쁘다", "예프다"]
+  },
+  {
+    "correct_answer": "늦깎이",
+    "incorrect_answers": ["늦갓이", "늦각기", "늦깍기"]
+  }
+]
