@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { fetchLocalQuiz } from '@/app/lib/fetchLocalQuiz';
 import { Quiz } from '@/app/types/quiz';
-import Countdown from '../components/Countdown';
+import QuizHeader from '../components/QuizHeader';
+import QuizQuestion from '../components/QuizQuestion';
 
 export default function QuizPlayPage() {
   const [current, setCurrent] = useState(0);
@@ -23,41 +24,36 @@ export default function QuizPlayPage() {
 
   useEffect(() => {
     if (!questions || !questions[current]) return;
-
     const q = questions[current];
     const shuffled = [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5);
     setAnswers(shuffled);
   }, [current, questions]);
 
+  const resultPath = (score: number) => `/quiz/result?score=${score}`;
+
   const handleTimeout = useCallback(() => {
     if (!questions || !questions[current]) return;
 
-    if (current + 1 < questions.length) {
-      setCurrent((prev) => prev + 1);
-      setSelected(null);
-      setShowAnswer(false);
-    } else {
-      router.push(resultPath(score));
-    }
+    setShowAnswer(true);
+    setTimeout(() => {
+      if (current + 1 < questions.length) {
+        setCurrent((prev) => prev + 1);
+        setSelected(null);
+        setShowAnswer(false);
+      } else {
+        router.push(resultPath(score));
+      }
+    }, 1500);
   }, [current, questions]);
 
-  if (isLoading) return <div className="text-center py-20">문제를 불러오는 중...</div>;
-  if (isError || !questions) return <div className="text-center py-20">문제를 불러올 수 없습니다.</div>;
-
-  const question = questions[current];
-
-  const resultPath = (score: number) => `/quiz/result?score=${score}`;
   const handleAnswer = (answer: string) => {
     setSelected(answer);
     setShowAnswer(true);
-
-    const correct = answer === question.correct_answer;
-    if (correct) {
-      setScore((prev) => prev + 1);
-    }
+    const correct = answer === questions![current].correct_answer;
+    if (correct) setScore((prev) => prev + 1);
 
     setTimeout(() => {
-      if (current + 1 < questions.length) {
+      if (current + 1 < questions!.length) {
         setCurrent((prev) => prev + 1);
         setSelected(null);
         setShowAnswer(false);
@@ -67,39 +63,29 @@ export default function QuizPlayPage() {
     }, 1500);
   };
 
-  const handleStop = () => {
-    return router.push(resultPath(score));
-  }
+  const handleStop = () => router.push(resultPath(score));
+
+  if (isLoading) return <div className="text-center py-20">문제를 불러오는 중...</div>;
+  if (isError || !questions) return <div className="text-center py-20">문제를 불러올 수 없습니다.</div>;
+
+  const question = questions[current];
 
   return (
     <main className="max-w-xl mx-auto p-4">
-      <div className="flex">
-        <h2 className="text-xl font-semibold mb-4">
-          문제 {current + 1} / {questions.length}
-        </h2>
-        <Countdown current={current} onTimeout={handleTimeout} />
-      </div>
+      <QuizHeader
+        current={current}
+        total={questions.length}
+        selected={selected}
+        onTimeout={handleTimeout}
+      />
 
-      <div className="text-lg font-medium mb-6">다음 중 맞는 표현은?</div>
-      <div className="space-y-3">
-        {answers.map((ans, i) => (
-          <button
-            key={i}
-            disabled={!!selected}
-            onClick={() => handleAnswer(ans)}
-            className={`w-full px-4 py-3 rounded-lg text-left border cursor-pointer ${showAnswer
-              ? ans === question.correct_answer
-                ? 'bg-green-100 border-green-500'
-                : ans === selected
-                  ? 'bg-red-100 border-red-500'
-                  : 'opacity-50'
-              : 'hover:bg-blue-100'
-              }`}
-          >
-            {ans}
-          </button>
-        ))}
-      </div>
+      <QuizQuestion
+        answers={answers}
+        question={question}
+        selected={selected}
+        showAnswer={showAnswer}
+        onSelect={handleAnswer}
+      />
 
       <button
         onClick={handleStop}

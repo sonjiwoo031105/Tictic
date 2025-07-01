@@ -2,32 +2,37 @@ import { useEffect, useRef, useState } from "react";
 
 type CountdownProps = {
   current: number;
+  selected: string | null;
   onTimeout: () => void;
 };
 
-export default function Countdown({ current, onTimeout }: CountdownProps) {
-  const timeLimit = 10;
-  const [time, setTime] = useState(timeLimit);
+const TIME_LIMIT = 10;
+
+export default function Countdown({ current, selected, onTimeout }: CountdownProps) {
+  const [time, setTime] = useState(TIME_LIMIT);
+  const [warn, setWarn] = useState(false);
   const calledRef = useRef(false);
 
   useEffect(() => {
-    setTime(timeLimit);
+    setTime(TIME_LIMIT);
     calledRef.current = false;
   }, [current]);
 
   useEffect(() => {
-    if (time <= 0) return;
+    if (time < 0 || !!selected) return;
+
+    setWarn(time <= 5);
 
     const timer = setInterval(() => {
       setTime((prevTime) => {
-        if (prevTime <= 1) {
+        if (prevTime <= 0) {
           clearInterval(timer);
 
           if (!calledRef.current) {
             calledRef.current = true;
             setTimeout(() => {
               onTimeout();
-            }, 1000);
+            }, 0);
           }
 
           return 0;
@@ -37,7 +42,14 @@ export default function Countdown({ current, onTimeout }: CountdownProps) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [time, onTimeout]);
+  }, [time, onTimeout, selected]);
 
-  return <p>⏱️{time}</p>;
+  return (
+    <h2
+      className={`text-2xl font-semibold ${warn ? 'text-red-500' : 'text-black'}`}
+    >
+      ⏱️{time}
+    </h2>
+  );
+
 }
