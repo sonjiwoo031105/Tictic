@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { score, category, difficulty } = body;
+  const { score } = body;
 
   const client = await clientPromise;
   const db = client.db('tictic');
@@ -22,8 +22,6 @@ export async function POST(request: Request) {
   const existing = await db.collection("quizResults").findOne({
     userId: user._id,
     score,
-    category,
-    difficulty,
   });
 
   if (existing) {
@@ -33,8 +31,6 @@ export async function POST(request: Request) {
    await db.collection('quizResults').insertOne({
     userId: user._id,
     score,
-    category,
-    difficulty,
     createdAt: new Date().toISOString(),
   });
 

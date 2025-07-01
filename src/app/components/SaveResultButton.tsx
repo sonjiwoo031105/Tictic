@@ -2,13 +2,7 @@
 
 import { useSession } from "next-auth/react";
 
-interface Props {
-  score: number;
-  category: string;
-  difficulty: string;
-}
-
-export default function SaveResultButton({ score, category, difficulty }: Props) {
+export default function SaveResultButton({ score }: { score: number }) {
   const { data: session } = useSession();
 
   if (!session?.user?.email) return;
@@ -18,10 +12,10 @@ export default function SaveResultButton({ score, category, difficulty }: Props)
       const res = await fetch('/api/quiz/result', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ score, category, difficulty }),
+        body: JSON.stringify({ score }),
       });
 
-       if (res.ok) {
+      if (res.ok) {
         alert("저장이 완료되었습니다.");
       } else if (res.status === 409) {
         alert("동일한 점수는 한 번만 저장 가능해요.");

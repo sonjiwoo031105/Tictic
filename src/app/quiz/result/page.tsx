@@ -2,14 +2,27 @@
 
 import LoginButton from '@/app/components/LoginButton';
 import SaveResultButton from '@/app/components/SaveResultButton';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useQuizStore } from '@/app/store/quizStore';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function QuizResultPage() {
-  const searchParams = useSearchParams();
+  const score = useQuizStore((state) => state.score);
   const router = useRouter();
-  const score = parseInt(searchParams.get('score') || '0', 10);
-  const category = searchParams.get('category') || '9';
-  const difficulty = searchParams.get('difficulty') || 'medium';
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    return <div className="text-center py-20">점수 불러오는 중...</div>;
+  }
+
+  if (score === 0) {
+    alert("잘못된 접근입니다. 퀴즈를 먼저 풀어주세요.");
+    return location.replace('/');
+  }
 
   const getMessage = () => {
     if (score === 10) return '🎉 완벽해요!';
@@ -33,7 +46,7 @@ export default function QuizResultPage() {
         >
           다시 풀기
         </button>
-        <SaveResultButton score={score} category={category} difficulty={difficulty} />
+        <SaveResultButton score={score} />
       </div>
 
       <LoginButton />

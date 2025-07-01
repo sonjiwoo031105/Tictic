@@ -7,6 +7,7 @@ import { fetchLocalQuiz } from '@/app/lib/fetchLocalQuiz';
 import { Quiz } from '@/app/types/quiz';
 import QuizHeader from '../components/QuizHeader';
 import QuizQuestion from '../components/QuizQuestion';
+import { useQuizStore } from '../store/quizStore';
 
 export default function QuizPlayPage() {
   const [current, setCurrent] = useState(0);
@@ -29,8 +30,6 @@ export default function QuizPlayPage() {
     setAnswers(shuffled);
   }, [current, questions]);
 
-  const resultPath = (score: number) => `/quiz/result?score=${score}`;
-
   const handleTimeout = useCallback(() => {
     if (!questions || !questions[current]) return;
 
@@ -41,7 +40,7 @@ export default function QuizPlayPage() {
         setSelected(null);
         setShowAnswer(false);
       } else {
-        router.push(resultPath(score));
+        handleFinish();
       }
     }, 1500);
   }, [current, questions]);
@@ -58,14 +57,18 @@ export default function QuizPlayPage() {
         setSelected(null);
         setShowAnswer(false);
       } else {
-        router.push(resultPath(correct ? score + 1 : score));
+        useQuizStore.getState().setScore(correct ? score + 1 : score);
+        router.push('/quiz/result');
       }
     }, 1500);
   };
 
-  const handleStop = () => router.push(resultPath(score));
+  const handleFinish = () => {
+    useQuizStore.getState().setScore(score);
+    router.push('/quiz/result');
+  }
 
-  if (isLoading) return <div className="text-center py-20">문제를 불러오는 중...</div>;
+  if (isLoading) return <div className="text-center py-20">문제 불러오는 중...</div>;
   if (isError || !questions) return <div className="text-center py-20">문제를 불러올 수 없습니다.</div>;
 
   const question = questions[current];
@@ -88,7 +91,7 @@ export default function QuizPlayPage() {
       />
 
       <button
-        onClick={handleStop}
+        onClick={handleFinish}
         className="float-right mt-16 bg-red-400 text-white rounded-lg px-4 py-2 hover:bg-red-500 cursor-pointer"
       >
         그만하기
