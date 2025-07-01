@@ -9,8 +9,8 @@ export default function LoginButton() {
 
   return session ? (
     <>
-       <p className="text-sm text-gray-400 mt-6">
-        점수를 저장해보세요! 📝
+      <p className="text-sm text-gray-400 mt-6">
+        점수를 저장해보세요! 📝 <br />
       </p>
       <div className="flex items-center gap-2">
         <span>{session.user?.name}</span>
@@ -19,7 +19,7 @@ export default function LoginButton() {
         </button>
       </div>
     </>
-   
+
   ) : (
     <>
       <p className="text-sm text-gray-400 mt-6">

@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen px-4 text-center bg-gray-50">
       <h1 className="text-5xl font-bold text-blue-600 mb-4">Tictic</h1>
-      <p className="text-lg text-gray-600 mb-10">⏱️ 타이머가 돌아간다 — 당신의 지식을 증명하라!</p>
+      <p className="text-lg text-gray-600 mb-10">⏱️ 타이머가 돌아간다 — 당신의 맞춤법 실력은?</p>
 
       <a
         href="/quiz"
@@ -10,8 +10,6 @@ export default function Home() {
       >
         퀴즈 시작하기
       </a>
-
-      <p className="text-sm text-gray-400 mt-10">또는 로그인 후 점수 저장</p>
     </main>
   );
 }

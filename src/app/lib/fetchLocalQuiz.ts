@@ -1,4 +1,4 @@
-import quizData from '../public/data/questions.json';
+import quizData from '../../data/questions.json';
 import { Quiz } from '../types/quiz';
 import { shuffleArray } from './shuffle';
 

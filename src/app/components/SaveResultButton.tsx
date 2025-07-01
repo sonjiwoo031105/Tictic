@@ -24,7 +24,7 @@ export default function SaveResultButton({ score, category, difficulty }: Props)
        if (res.ok) {
         alert("저장이 완료되었습니다.");
       } else if (res.status === 409) {
-        alert("이미 저장된 결과입니다.");
+        alert("동일한 점수는 한 번만 저장 가능해요.");
       } else {
         const data = await res.json();
         alert(`저장 실패: ${data.message}`);
