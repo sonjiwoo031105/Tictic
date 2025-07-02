@@ -40,7 +40,7 @@ export default function QuizPlayPage() {
         setSelected(null);
         setShowAnswer(false);
       } else {
-        handleFinish();
+        handleFinish(score);
       }
     }, 1500);
   }, [current, questions]);
@@ -57,14 +57,14 @@ export default function QuizPlayPage() {
         setSelected(null);
         setShowAnswer(false);
       } else {
-        useQuizStore.getState().setScore(correct ? score + 1 : score);
-        router.push('/quiz/result');
+        handleFinish(correct ? score + 1 : score);
       }
     }, 1500);
   };
 
-  const handleFinish = () => {
+  const handleFinish = (score: number) => {
     useQuizStore.getState().setScore(score);
+    useQuizStore.getState().setFinished(true);
     router.push('/quiz/result');
   }
 
@@ -91,7 +91,7 @@ export default function QuizPlayPage() {
       />
 
       <button
-        onClick={handleFinish}
+        onClick={() => handleFinish(score)}
         className="float-right mt-16 bg-red-400 text-white rounded-lg px-4 py-2 hover:bg-red-500 cursor-pointer"
       >
         그만하기
