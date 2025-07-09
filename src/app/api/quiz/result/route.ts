@@ -1,6 +1,17 @@
 import clientPromise from "@/app/lib/mongodb";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../auth/[...nextauth]/route";
+import { NextResponse } from "next/server";
+import { getUserQuizResults } from "@/app/lib/getUserResults";
+
+export async function GET() {
+  try {
+    const results = await getUserQuizResults();
+    return NextResponse.json(results, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+}
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -28,7 +39,7 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify({ message: "이미 저장된 결과입니다." }), { status: 409 });
   }
 
-   await db.collection('quizResults').insertOne({
+  await db.collection('quizResults').insertOne({
     userId: user._id,
     score,
     createdAt: new Date().toISOString(),

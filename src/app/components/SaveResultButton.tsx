@@ -35,5 +35,5 @@ export default function SaveResultButton({ score }: { score: number }) {
     >
       점수 저장
     </button>
-  )
+  );
 }

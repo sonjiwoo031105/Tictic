@@ -1,3 +1,5 @@
+import LoginButton from "./components/LoginButton";
+
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen px-4 text-center bg-gray-50">
@@ -10,6 +12,8 @@ export default function Home() {
       >
         퀴즈 시작하기
       </a>
+
+      <LoginButton />
     </main>
   );
 }
