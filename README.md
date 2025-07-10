@@ -1,91 +1,59 @@
-# 🧠 Tictic
+## 📘 Tictic - 맞춤법 퀴즈 웹 앱
 
-**Tictic**은 오픈 API를 기반으로 만든 반응형 퀴즈 웹 애플리케이션입니다.  
-문제를 풀며 두뇌를 자극하고, 다른 사람들과 점수를 비교할 수 있습니다.
+#### [배포 링크 바로가기 🔗](https://tictic-sonjiwoo031105s-projects.vercel.app/)
 
-<br/>
+Tictic은 한국어 맞춤법 퀴즈를 통해 자연스럽게 올바른 표현을 익힐 수 있도록 만든 웹 기반 퀴즈 앱입니다. <br>
+단순한 문제풀이를 넘어서 학습 흐름과 기록 관리까지 고려한 기능을 제공합니다.
 
-## 🚀 프로젝트 개요
-
-- **개발 목적**: 포트폴리오용 프로젝트 + 모바일 대응 UX + 실무에 적용할 수 있는 기술 학습
-- **주요 특징**: 오픈 API 활용, 한글 번역 지원, 사용자 점수 기록 및 랭킹 시스템
-
-<br/>
-
-## 🛠 기술 스택
-
-| 범주 | 기술 |
-|------|------|
-| **Framework** | Next.js 14 (App Router) |
-| **Styling** | Tailwind CSS |
-| **Authentication** | NextAuth.js (Google OAuth) |
-| **Data Fetching** | React Query |
-| **API** | Open Trivia DB, 추후 QuizAPI.io 연동 예정 |
-| **Backend** | Route Handlers (Next.js), Prisma + PlanetScale |
-| **i18n** | Papago 또는 Google Translate API (한글 번역용) |
-| **Deployment** | Vercel |
-| **Etc.** | TypeScript, ESLint, Prettier |
-
-<br/>
+<br>
 
 ## ✨ 주요 기능
+- ✅ 퀴즈 플레이: 맞춤법 퀴즈를 풀며 즉시 피드백 제공
+- ✅ 자동 진행: 타이머 종료 시 자동으로 다음 문제로 이동
+- ✅ 점수 저장 및 결과 보기: 퀴즈 종료 후 결과 확인 가능
+- ✅ 사용자 인증: NextAuth + MongoDB로 로그인 기능 구현
+- ✅ 상태 저장: Zustand로 클라이언트 상태 안전하게 유지
+- ✅ 반응형 UI: 모바일 환경에서도 최적화된 사용 경험
 
-- ✅ 오픈 API 기반 퀴즈 문제 제공 (카테고리/난이도 선택 가능)
-- ✅ 제한 시간 타이머 및 점수 계산
-- ✅ 문제 랜덤 셔플 및 UI 피드백
-- ✅ 한글 자동 번역 기능 (캐싱 및 서버 처리 예정)
-- ✅ 로그인 기반 점수 기록 저장 및 랭킹
-- ✅ 반응형 UI (모바일 최적화)
+<br>
 
-<br/>
+## 🛠 기술 스택
+- Frontend: React, Next.js (App Router), TypeScript, Tailwind CSS
+- 상태 관리: Zustand
+- 데이터 처리: 직접 작성한 퀴즈 JSON
+- API 도구: React Query
+- 개발 도구: Vite, ESLint, Prettier
+- 배포: Vercel
 
-## 📁 폴더 구조 (예시)
+<br>
 
+## 📂 주요 폴더 구조
 ```bash
-/app
-├ /quiz # 퀴즈 플레이 관련 페이지
-├ /result # 결과 페이지
-└ /history # 유저 퀴즈 기록
-
-/components
-├ QuizCard.tsx
-├ Timer.tsx
-└ ScoreBar.tsx
-
-/lib
-├ getQuiz.ts # Open Trivia DB 호출
-├ translate.ts # 번역 API 연동
-└ shuffle.ts # 보기 섞기 로직
-
-/api
-└ /translate # 서버에서 번역 + 캐시 처리
-
-/prisma
-└ schema.prisma
+src/
+├── app/
+│   ├── quiz/               # 퀴즈, 결과 페이지
+│   ├── api/                # NextAuth API 라우트
+├── components/             # 재사용 가능한 컴포넌트들
+├── store/                  # Zustand 상태 관리
+├── lib/                    # 퀴즈 fetch 및 유틸
+├── types/                  # TypeScript 타입 정의
+public/
+├── quiz.json               # 맞춤법 퀴즈 데이터
 ```
 
+<br>
 
-<br/>
+## 🧪 기능 흐름 요약
+1. 퀴즈 시작 시 `quiz.json`에서 문제 불러오기
+2. 각 문제마다 보기 랜덤 셔플 및 선택
+3. 정답 선택 시 즉시 정오답 표시
+4. 타이머 종료 시 자동 진행
+5. 마지막 문제 후 `/quiz/result` 페이지로 이동
+6. 점수 및 오답 정보 Zustand에 저장 후 결과 화면에 표시
 
-## 🔮 향후 계획
+<br>
 
-- [ ] QuizAPI.io 연동 (전문 분야 퀴즈 추가)
-- [ ] 한글 번역 캐시 시스템 구축 (DB 활용)
-- [ ] 실시간 대결 모드 (Socket.io or Pusher)
-- [ ] 힌트 아이템, 시간 보너스 등 게임화 요소 추가
-- [ ] 퀴즈 생성 및 공유 기능
+## 🚀 향후 개선 아이디어
 
-<br/>
-
-## 📸 스크린샷 (추가 예정)
-
-> 추후 UI 완성 후 이미지 업로드 예정
-
-<br/>
-
-## 🧑‍💻 개발자
-
-- [손지우 (Son Jiwoo)](https://github.com/sonjiwoo031105)
-- 📫 Contact: [sonjiwoo031105@gmail.com](mailto:sonjiwoo031105@gmail.com)
-
----
+- MongoDB로 문제 저장 및 관리 기능
+- 퀴즈 카테고리(띄어쓰기, 맞춤법, 외래어 등) 추가
