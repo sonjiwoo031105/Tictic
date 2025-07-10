@@ -24,46 +24,16 @@ export default function QuizPlayPage() {
     staleTime: 1000 * 60,
   });
 
-  useEffect(() => {
-    if (!questions || !questions[current]) return;
-    const q = questions[current];
-    const shuffled = [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5);
-    setAnswers(shuffled);
-  }, [current, questions]);
-
-  const handleTimeout = useCallback(() => {
-    if (!questions || !questions[current]) return;
-
-    setShowAnswer(true);
-    setTimeout(() => {
-      if (current + 1 < questions.length) {
-        setCurrent((prev) => prev + 1);
-        setSelected(null);
-        setShowAnswer(false);
-      } else {
-        handleFinish(score);
-      }
-    }, 1500);
-  }, [current, questions]);
-
-  const handleAnswer = (answer: string) => {
-    setSelected(answer);
-    setShowAnswer(true);
-    const correct = answer === questions![current].correct_answer;
-    if (correct) setScore((prev) => prev + 1);
-
-    setTimeout(() => {
-      if (current + 1 < questions!.length) {
-        setCurrent((prev) => prev + 1);
-        setSelected(null);
-        setShowAnswer(false);
-      } else {
-        handleFinish(correct ? score + 1 : score);
-      }
-    }, 1500);
+  const shuffleAnswers = (q: Quiz) => {
+    return [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5);
   };
 
-  const handleFinish = async (score: number) => {
+  useEffect(() => {
+    if (!questions || !questions[current]) return;
+    setAnswers(shuffleAnswers(questions[current]));
+  }, [current, questions]);
+
+  const handleFinish = useCallback(async (score: number) => {
     setLoading(true);
     try {
       useQuizStore.getState().setScore(score);
@@ -72,7 +42,40 @@ export default function QuizPlayPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [router]);
+
+  const handleNextQuestion = (nextScore = score) => {
+    if (current + 1 < questions!.length) {
+      setCurrent((prev) => prev + 1);
+      setSelected(null);
+      setShowAnswer(false);
+    } else {
+      handleFinish(nextScore);
+    }
+  };
+
+  const handleTimeout = useCallback(() => {
+    if (!questions || !questions[current]) return;
+
+    setShowAnswer(true);
+    setTimeout(() => handleNextQuestion(), 1500);
+  }, [current, questions, handleFinish]);
+
+  const handleAnswer = (answer: string) => {
+    setSelected(answer);
+    setShowAnswer(true);
+    const correct = answer === questions![current].correct_answer;
+    const updatedScore = correct ? score + 1 : score;
+    if (correct) setScore(updatedScore);
+
+    setTimeout(() => handleNextQuestion(updatedScore), 1500);
+  };
+
+  const handleExit = () => {
+    if (confirm('정말로 그만하시겠어요?')) {
+      handleFinish(score);
+    }
+  };
 
   if (isLoading) return <div className="text-center py-20">문제 불러오는 중...</div>;
   if (isError || !questions) return <div className="text-center py-20">문제를 불러올 수 없습니다.</div>;
@@ -97,7 +100,7 @@ export default function QuizPlayPage() {
       />
 
       <button
-        onClick={() => handleFinish(score)}
+        onClick={handleExit}
         disabled={loading}
         className={`float-right mt-16 rounded-lg px-4 py-2 flex items-center justify-center gap-2 cursor-pointer
         ${loading ? 'bg-gray-300 cursor-not-allowed' : 'bg-red-400 hover:bg-red-500 text-white'}`}
