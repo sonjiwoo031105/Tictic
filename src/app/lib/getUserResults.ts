@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { getServerSession } from 'next-auth';
 import clientPromise from './mongodb';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import { authOptions } from './authOptions';
 
 export async function getUserQuizResults() {
   const session = await getServerSession(authOptions);

@@ -9,8 +9,8 @@ export default async function MyPage() {
       <h1 className="text-2xl font-bold mb-6 text-center">마이페이지</h1>
 
       <ul className="space-y-3 mb-12">
-        {results.map((res: any) => (
-          <li key={res._id} className="border p-4 rounded shadow-sm">
+        {results.map((res) => (
+          <li key={res._id?.toString()} className="border p-4 rounded shadow-sm">
             <p><strong>점수:</strong> {res.score}점</p>
             <p><strong>날짜:</strong> {new Date(res.createdAt).toLocaleString()}</p>
           </li>

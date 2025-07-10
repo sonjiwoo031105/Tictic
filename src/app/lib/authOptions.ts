@@ -1,0 +1,22 @@
+import clientPromise from '@/app/lib/mongodb';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import { AuthOptions } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+
+export const authOptions: AuthOptions = {
+  adapter: MongoDBAdapter(clientPromise, {
+    databaseName: "tictic",
+  }),
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+  ],
+  pages: {
+    signIn: '/login',
+  },
+  session: {
+    strategy: 'database',
+  },
+};

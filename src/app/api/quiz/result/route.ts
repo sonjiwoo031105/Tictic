@@ -1,14 +1,14 @@
 import clientPromise from "@/app/lib/mongodb";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import { getUserQuizResults } from "@/app/lib/getUserResults";
+import { authOptions } from "@/app/lib/authOptions";
 
 export async function GET() {
   try {
     const results = await getUserQuizResults();
     return NextResponse.json(results, { status: 200 });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 }
