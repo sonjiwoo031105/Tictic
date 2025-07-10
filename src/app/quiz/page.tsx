@@ -15,6 +15,7 @@ export default function QuizPlayPage() {
   const [score, setScore] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [answers, setAnswers] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const { data: questions, isLoading, isError } = useQuery<Quiz[]>({
@@ -62,10 +63,15 @@ export default function QuizPlayPage() {
     }, 1500);
   };
 
-  const handleFinish = (score: number) => {
-    useQuizStore.getState().setScore(score);
-    useQuizStore.getState().setFinished(true);
-    router.push('/quiz/result');
+  const handleFinish = async (score: number) => {
+    setLoading(true);
+    try {
+      useQuizStore.getState().setScore(score);
+      useQuizStore.getState().setFinished(true);
+      router.push('/quiz/result');
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (isLoading) return <div className="text-center py-20">문제 불러오는 중...</div>;
@@ -92,9 +98,18 @@ export default function QuizPlayPage() {
 
       <button
         onClick={() => handleFinish(score)}
-        className="float-right mt-16 bg-red-400 text-white rounded-lg px-4 py-2 hover:bg-red-500 cursor-pointer"
+        disabled={loading}
+        className={`float-right mt-16 rounded-lg px-4 py-2 flex items-center justify-center gap-2 cursor-pointer
+        ${loading ? 'bg-gray-300 cursor-not-allowed' : 'bg-red-400 hover:bg-red-500 text-white'}`}
       >
-        그만하기
+        {loading ? (
+          <>
+            <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            이동 중...
+          </>
+        ) : (
+          '그만하기'
+        )}
       </button>
     </main>
   );
