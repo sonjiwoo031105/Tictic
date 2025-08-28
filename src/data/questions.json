@@ -44,8 +44,8 @@
     "incorrect_answers": ["왠일이야", "왼일이야", "왜일이야"]
   },
   {
-    "correct_answer": "같은 편",
-    "incorrect_answers": ["가튼 편", "같은 변", "가튼 변"]
+    "correct_answer": "어떻게",
+    "incorrect_answers": ["어떡게", "어떻케", "어떨게"]
   },
   {
     "correct_answer": "던지다",
@@ -53,7 +53,7 @@
   },
   {
     "correct_answer": "반드시",
-    "incorrect_answers": ["반듯이", "반드시이", "반드시다"]
+    "incorrect_answers": ["반듯이", "반드시이", "반듯시"]
   },
   {
     "correct_answer": "잊히다",
@@ -81,7 +81,7 @@
   },
   {
     "correct_answer": "며칠",
-    "incorrect_answers": ["몇일", "며칟", "몇칠"]
+    "incorrect_answers": ["몇일", "몇 일", "몇칠"]
   },
   {
     "correct_answer": "연륜",
@@ -108,8 +108,8 @@
     "incorrect_answers": ["베어 있다", "배여 있다", "베여 있다"]
   },
   {
-    "correct_answer": "다르다",
-    "incorrect_answers": ["틀리다", "딴르다", "달르다"]
+    "correct_answer": "금세",
+    "incorrect_answers": ["금새", "금시", "금시에"]
   },
   {
     "correct_answer": "통틀어",
@@ -140,8 +140,8 @@
     "incorrect_answers": ["띠어쓰기", "띄여쓰기", "띠여쓰기"]
   },
   {
-    "correct_answer": "여보세요",
-    "incorrect_answers": ["여보세여", "여보세오", "여보세욤"]
+    "correct_answer": "맡기다",
+    "incorrect_answers": ["맏기다", "맟기다", "맞기다"]
   },
   {
     "correct_answer": "이내",
@@ -160,8 +160,8 @@
     "incorrect_answers": ["나다", "놋다", "낟다"]
   },
   {
-    "correct_answer": "다 되다",
-    "incorrect_answers": ["다되다", "다됬다", "다되엇다"]
+    "correct_answer": "되어",
+    "incorrect_answers": ["돼어", "되여", "돼"]
   },
   {
     "correct_answer": "되다",
