@@ -1,11 +1,18 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+interface WrongAnswer {
+  userAnswer: string;
+  correctAnswer: string;
+} 
+
 type QuizStore = {
   score: number;
+  wrongAnswers: WrongAnswer[];
   finished: boolean;
   setScore: (score: number) => void;
-  resetScore: () => void;
+  setWrongAnswer: (wrong: WrongAnswer) => void;
+  resetQuiz: () => void;
   setFinished: (finished: boolean) => void;
 };
 
@@ -13,9 +20,14 @@ export const useQuizStore = create(
   persist<QuizStore>(
     (set) => ({
       score: 0,
+      wrongAnswers: [],
       finished: false,
       setScore: (score) => set({ score }),
-      resetScore: () => set({ score: 0, finished: false }),
+      setWrongAnswer: (wrong) => 
+        set((state) => ({
+          wrongAnswers: [...state.wrongAnswers, wrong] 
+        })),
+      resetQuiz: () => set({ score: 0, wrongAnswers: [], finished: false }),
       setFinished: (finished) => set({ finished }),
     }),
     {

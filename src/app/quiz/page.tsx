@@ -61,12 +61,24 @@ export default function QuizPlayPage() {
     setTimeout(() => handleNextQuestion(), 1500);
   }, [current, questions, handleFinish]);
 
+  const setWrongAnswer = useQuizStore((s) => s.setWrongAnswer);
+
   const handleAnswer = (answer: string) => {
     setSelected(answer);
     setShowAnswer(true);
-    const correct = answer === questions![current].correct_answer;
+    
+    const correctAnswer = questions![current].correct_answer
+    const correct = answer === correctAnswer;
     const updatedScore = correct ? score + 1 : score;
-    if (correct) setScore(updatedScore);
+
+    if (correct) {
+      setScore(updatedScore);
+    } else {
+      setWrongAnswer({
+        userAnswer: answer,
+        correctAnswer,
+      });
+    }
 
     setTimeout(() => handleNextQuestion(updatedScore), 1500);
   };

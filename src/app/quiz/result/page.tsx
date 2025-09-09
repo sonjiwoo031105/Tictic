@@ -2,14 +2,13 @@
 
 import LoginButton from '@/app/components/LoginButton';
 import SaveResultButton from '@/app/components/SaveResultButton';
+import WrongAnswerList from '@/app/components/WrongAnswerList';
 import { useQuizStore } from '@/app/store/quizStore';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function QuizResultPage() {
-  const score = useQuizStore((state) => state.score);
-  const finished = useQuizStore((state) => state.finished);
-  const resetScore = useQuizStore((state) => state.resetScore);
+  const { score, wrongAnswers, finished, resetQuiz } = useQuizStore();
   const [redirected, setRedirected] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const router = useRouter();
@@ -43,7 +42,7 @@ export default function QuizResultPage() {
 
   const tryAgain = () => {
     setRedirected(true);
-    resetScore();
+    resetQuiz();
     router.push('/quiz');
   };
 
@@ -55,7 +54,7 @@ export default function QuizResultPage() {
         총 <strong>{score}</strong> / 10 문제 맞혔어요!
       </p>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 mb-2">
         <button
           onClick={tryAgain}
           className="bg-blue-500 text-white px-6 py-3 rounded-xl text-lg font-semibold hover:bg-blue-600 transition cursor-pointer"
@@ -64,6 +63,8 @@ export default function QuizResultPage() {
         </button>
         <SaveResultButton score={score} />
       </div>
+
+      <WrongAnswerList wrongAnswers={wrongAnswers} />
 
       <LoginButton />
     </main>
